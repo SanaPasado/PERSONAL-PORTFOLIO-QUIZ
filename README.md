@@ -7,7 +7,6 @@ Welcome to my personal portfolio repository! This project contains a showcase of
 You can download this portfolio by following these steps:
 
 ### Option 1: Clone the Repository (Recommended)
-Make sure you have Git installed. Then run:
+install packages by having git and also ensure that you have a python interpreter to make it run
 
-```bash
-git clone https://github.com/your-username/your-repository-name.git
+
