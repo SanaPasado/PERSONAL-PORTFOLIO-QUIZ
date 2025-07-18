@@ -1,22 +1,15 @@
-"""
-URL configuration for djangoProject2 project.
+# myproject/urls.py
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include # Ensure 'include' is imported
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), # Django Admin URL
+    # Include all URLs from the 'portfolio' app at the root path ('').
+    # This means your dashboard will be at '/', portfolio details at '/<username>/', etc.
+    path('', include('portfolio.urls')),
+    # Removed: path('accounts/', include('django.contrib.auth.urls')),
+    # Since you want to rely solely on the admin for login,
+    # the default Django auth URLs are no longer included here.
+    # Users will log in via the /admin/ URL.
 ]

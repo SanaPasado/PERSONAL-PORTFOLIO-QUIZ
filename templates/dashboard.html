@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %} <!-- Added to load static files capabilities -->
+<!-- Extends the base template for consistent layout -->
+
+{% block title %}Applicant Dashboard - List{% endblock %} <!-- Sets the page title -->
+
+{% block content %}
+    <h1 class="mb-4 text-center">Applicant Dashboard</h1>
+
+    <!-- Display the hardcoded position information -->
+    <div class="position-info bg-light p-3 rounded mb-4 text-center shadow-sm">
+        <p class="lead mb-0">Applicants are applying for the position of: <strong>{{ position_applying_for }}</strong></p>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center rounded-top">
+            <h4 class="mb-0">Applicant Information</h4>
+        </div>
+        <div class="card-body">
+            {% if applicants %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover rounded">
+                    <thead class="bg-light">
+                        <tr>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for applicant_user in applicants %}
+                        <tr>
+                            <td>{{ applicant_user.first_name }}</td>
+                            <td>{{ applicant_user.last_name }}</td>
+                            <td>{{ applicant_user.email }}</td>
+                            <td>
+                                <!-- "Go" button redirects to the portfolio detail page -->
+                                <a href="{% url 'portfolio_detail' username=applicant_user.username %}" class="btn btn-primary btn-sm me-2 rounded">Go</a>
+                                <!-- "Delete" button redirects to the user deletion confirmation page -->
+                                <a href="{% url 'user_delete' username=applicant_user.username %}" class="btn btn-danger btn-sm rounded">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <!-- Message displayed if no applicants are found -->
+            <div class="alert alert-info text-center" role="alert">
+                No applicants found. Please add users and create portfolios for them via Django Admin.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Custom styles for this page, integrated with Bootstrap classes */
+    .position-info {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .table th, .table td {
+        vertical-align: middle; /* Vertically align content in table cells */
+    }
+    .btn-primary, .btn-danger {
+        width: 80px; /* Ensures consistent width for action buttons */
+    }
+</style>
+{% endblock %}

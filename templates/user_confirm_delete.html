@@ -1,0 +1,22 @@
+<!-- templates/user_confirm_delete.html -->
+{% load static %} <!-- Added to load static files capabilities -->
+{% extends 'base.html' %} <!-- Extends the base template -->
+
+{% block title %}Confirm Delete - {{ object.username }}{% endblock %} <!-- Sets the page title dynamically -->
+
+{% block content %}
+    <div class="card shadow-sm mx-auto rounded" style="max-width: 500px;">
+        <div class="card-header bg-danger text-white text-center rounded-top">
+            <h4 class="mb-0">Confirm Deletion</h4>
+        </div>
+        <div class="card-body text-center">
+            <p class="lead">Are you sure you want to delete the user <strong>"{{ object.username }}"</strong>?</p>
+            <p class="text-danger">This will permanently delete the user and their associated portfolio and projects.</p>
+            <form method="post">
+                {% csrf_token %} <!-- Django's CSRF protection -->
+                <button type="submit" class="btn btn-danger me-2 rounded">Yes, delete</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary rounded">Cancel</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

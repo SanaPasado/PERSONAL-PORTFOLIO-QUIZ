@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %} <!-- Added to load static files capabilities -->
+ <!-- Extends the base template -->
+
+{% block title %}Portfolio Detail - {{ portfolio.user.first_name }} {{ portfolio.user.last_name }}{% endblock %} <!-- Sets the page title dynamically -->
+
+{% block content %}
+    <h1 class="mb-4 text-center">Portfolio of {{ portfolio.user.first_name }} {{ portfolio.user.last_name }}</h1>
+
+    <!-- Card for Portfolio details -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white rounded-top">
+            <h4 class="mb-0">{{ portfolio.portfolio_title }}</h4>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ portfolio.portfolio_description|linebreaksbr }}</p>
+            <p class="text-muted">Associated User: <strong>{{ portfolio.user.username }} ({{ portfolio.user.email }})</strong></p>
+        </div>
+    </div>
+
+    <h2 class="mb-3 text-center">Projects</h2>
+    {% if portfolio.projects.all %}
+        <!-- Grid layout for projects -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for project in portfolio.projects.all %}
+            <div class="col">
+                <div class="card h-100 shadow-sm rounded">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.project_name }}</h5>
+                        <p class="card-text">{{ project.project_description|truncatechars:150 }}</p>
+                    </div>
+                    <div class="card-footer text-muted bg-light border-top-0 rounded-bottom">
+                        <small>Created: {{ project.created_at|date:"M d, Y" }}</small><br>
+                        <small>Last Updated: {{ project.updated_at|date:"M d, Y" }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Message if no projects are found -->
+        <div class="alert alert-warning text-center" role="alert">
+            No projects found for this portfolio.
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary rounded">Back to Dashboard</a>
+    </div>
+{% endblock %}
